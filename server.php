@@ -30,6 +30,11 @@
     'max_request' => 2,
   ]);
 
+  // 服务端启动时
+  $server->on('start', function ($serv) {
+    echo "Swoole websocket server start\n";
+  });
+
   // 监听连接进入事件
   $server->on('connect', function ($serv, $fd) {
     echo "fd: $fd Connect\n";
