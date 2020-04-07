@@ -55,3 +55,5 @@ Swoole websocket server start
 本例中你可以可打开多个页面，例如：`http://www.abc.com/zhangsan.html`、`http://www.abc.com/lisi.html`、`http://www.abc.com/wangwu.html` 同时打开，你将看到他们每个人的聊天框内都会有消息提示。如果某个人群发消息，那么其他两个人都将同时收到此消息，如下图所示。
 
 ![群聊测试页](https://www.haosijia.vip/img/20200407/Websocket演示/群聊测试页.png "群聊测试页")
+
+如果要更改客户端websocket连接地址和端口，在 `websocket-simple.js` 文件中修改 `url` 和 `port` 参数，也可以在页面中的js代码里调用 `setUrl()` 和 `setPort()` 方法动态设置参数。

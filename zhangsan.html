@@ -12,7 +12,7 @@
   </body>
   <script type="text/javascript">
 
-    ws = simpleWS.connect("ws://127.0.0.1:2020?name=张三");
+    ws = simpleWS.setName('张三').connect();
 
     // 点击“发送”按钮事件
     $('.send-key').on('click', function(){

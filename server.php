@@ -33,6 +33,7 @@
   // 服务端启动时
   $server->on('start', function ($serv) {
     echo "Swoole websocket server start\n";
+    cleanCache();
   });
 
   // 监听连接进入事件
@@ -46,7 +47,7 @@
     echo "fd: $request->fd Open\n";
 
     // 管理客户端连接,计入缓存,这里获取到request参数,做姓名与fd的匹配,以便后面做给指定个人发送消息
-    setNameByCache($request->get['name'], $request->fd);
+    setCacheByFile($request->get['name'], $request->fd);
 
     // 向此客户端发送消息
     $serv->push($request->fd, json_encode(['type'=>'系统消息','content'=>'连接成功'], JSON_UNESCAPED_UNICODE));
@@ -66,7 +67,9 @@
 
     // 群发
     foreach ($serv->connections as $fd) {
-      $serv->push($fd, json_encode(['type'=>$names[$frame->fd],'content'=>$frame->data]));
+      if ($serv->isEstablished($fd)) {
+        $serv->push($fd, json_encode(['type'=>$names[$frame->fd],'content'=>$frame->data]));
+      }
     }
 
   });
@@ -83,8 +86,12 @@
     $names = getNamesByCache();
     // 群发
     foreach ($serv->connections as $connect_fd) {
-      $serv->push($connect_fd, json_encode(['type'=>'系统消息','content'=>$names[$fd].'已退出']));
+      if ($serv->isEstablished($connect_fd)) {
+        $serv->push($connect_fd, json_encode(['type'=>'系统消息','content'=>$names[$fd].'已退出']));
+      }
     }
+    // 删除此客户的缓存
+    delChace($names[$fd]);
   });
 
   $server->start();
@@ -106,7 +113,7 @@
   }
 
   // 记录姓名和fd的对应关系到文件缓存,简单的用本地文件做存储,实际开发中可以用Redis等性能更好的缓存
-  function setNameByCache(String $name, Int $fd)
+  function setCacheByFile(String $name, Int $fd)
   {
     if(!file_exists('cache')){ //检查文件夹是否存在
       mkdir ("cache"); //没有就创建一个新文件夹
@@ -116,4 +123,23 @@
     fwrite($name_fd_file, $fd);
     fclose($name_fd_file);
     return $name_fd_file;
+  }
+
+  // 删除某个客户的缓存
+  function delChace(String $name)
+  {
+    unlink('cache/'.$name.'.fd');
+  }
+
+  // 清理全部缓存
+  function cleanCache()
+  {
+    $dir = dir('cache');
+    while(($file = $dir->read()) !== false){
+      if ($file != "." && $file != "..") {
+        if (file_exists('cache/'.$file)) {
+          unlink('cache/'.$file);
+        }
+      }
+    }
   }

@@ -1,17 +1,40 @@
 // 简单封装一下websocket
 var simpleWS = {
+  url: 'ws://127.0.0.1',
+  port: '2020',
+  name: '游客',
   onopen: function(){},
   onclose: function(){},
   onmessage: function(){},
   send: function(){},
 };
 
-simpleWS.connect = function(url){
+// 设置url
+simpleWS.setUrl = function(url){
+  this.url = url;
+  return this;
+}
+
+// 设置端口号
+simpleWS.setPort = function(port){
+  this.port = port;
+  return this;
+}
+
+// 在url中的query中设置当前客户端客户姓名
+simpleWS.setName = function(name){
+  this.name = name;
+  return this;
+}
+
+// 启动websocket连接
+simpleWS.connect = function(url = null){
 
   // 通过js的websocket接口连接服务端,此接口需要现代浏览器才能支持,API详情：https://developer.mozilla.org/zh-CN/docs/Web/API/Websockets_API#浏览器兼容性
   // 如果服务端是带有SSL安全证书的端口，则需要写成“wss://”
+  url = this.url + ':' + this.port;
   // 这里简单的设置一下当前用户的姓名,传给后台做姓名与fd匹配
-  this.ws = new WebSocket(url);
+  this.ws = new WebSocket(url+'?name='+this.name);
 
   // 连接成功
   this.ws.onopen = function(event){
