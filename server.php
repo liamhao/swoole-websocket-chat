@@ -9,7 +9,7 @@
   $port = '2020';
 
   // 同步 IO 的代码变成可以协程调度的异步 IO，即一键协程化
-  // \Swoole\Runtime::enableCoroutine(SWOOLE_HOOK_ALL);
+  \Swoole\Runtime::enableCoroutine(SWOOLE_HOOK_ALL);
 
   // 获取当前进程的pid
   // $mpid = posix_getpid();
@@ -92,6 +92,7 @@
 
   // 监听http请求
   $server->on('request', function (\Swoole\Http\Request $request, \Swoole\Http\Response $response) {
+    // 面向过程的代码需要使用global关键字引用外部变量
     global $server;
     echo "Request\n";
     if(
