@@ -1,8 +1,7 @@
 # websocket
 利用swoole扩展，保持websocket长连接，实现简易Web聊天功能，以及服务端主动推送。
 
-[![Total Downloads](https://poser.pugx.org/haosijia/swoole-websocket-chat/downloads)](https://packagist.org/packages/haosijia/swoole-websocket-chat)
-[![License](https://poser.pugx.org/haosijia/swoole-websocket-chat/license)](https://packagist.org/packages/haosijia/swoole-websocket-chat)
+[![License](https://poser.pugx.org/haosijia/feiyu-crm/license)](https://github.com/liamhao/swoole-websocket-chat)
 
 ## 说明
 本项目属于演示项目，请勿在线上生产环境使用，仅供学习参考。目前实现的功能：
@@ -11,7 +10,7 @@
 - 服务器（服务端）利用文件缓存，存储并管理前端（客户端）
 - 服务器（服务端）将客户消息进行群发
 - 多个客户端之间的群聊
-- 服务端主动推送（正在更新中..）
+- 服务端主动推送消息
 
 ## 准备
 首先你的服务器或者电脑上要安装有以下软件和环境：
@@ -33,7 +32,7 @@ $ git clone https://github.com/liamhao/swoole-websocket-chat.git
 $ cd swoole-websocket-chat
 ```
 
-### 启动 Server 服务
+## 启动 Server 服务
 将项目所有文件放到你的Web服务器设置的根目录下，然后在服务器命令行中输入：
 ```
 $ php server.php
@@ -44,16 +43,21 @@ $ php server.php
 Swoole websocket server start
 
 ```
-如果键入 `Ctrl` + `C` 退出等待状态，则websocket服务会停止监听。
+如果键入 `Ctrl` + `C` 退出等待状态，则websocket服务会停止监听。如果要修改 `server.php` 文件，则需要重启server才会生效。
 
-### 单客户端与服务通信
+## 单客户端与服务通信
 如果你配置的网址为：`http://www.abc.com`，则在浏览器地址栏中输入 `http://www.abc.com/wangwu.html`。打开浏览器的调试窗口（本例为Chrome浏览器），在 `Network` tab中点击 `All`，找到 `Type` 为 `websocket` 的请求，点击此请求，在右侧的 `Messages` 中可看到消息内容。红色为服务发送的消息，绿色为浏览器（客户端）发送的消息，如下图所示。
 
 ![王五测试页](https://www.haosijia.vip/img/20200407/Websocket演示/王五测试页.png "王五测试页")
 
-### 多客户端与服务通信
+## 多客户端与服务通信
 本例中你可以可打开多个页面，例如：`http://www.abc.com/zhangsan.html`、`http://www.abc.com/lisi.html`、`http://www.abc.com/wangwu.html` 同时打开，你将看到他们每个人的聊天框内都会有消息提示。如果某个人群发消息，那么其他两个人都将同时收到此消息，如下图所示。
 
 ![群聊测试页](https://www.haosijia.vip/img/20200407/Websocket演示/群聊测试页.png "群聊测试页")
 
 如果要更改客户端websocket连接地址和端口，在 `websocket-simple.js` 文件中修改 `url` 和 `port` 参数，也可以在页面中的js代码里调用 `setUrl()` 和 `setPort()` 方法动态设置参数。
+
+## 服务端主动推送消息
+再打开 `http://www.abc.com/index.html` 页面，在输入框中输入文字，点击 `主动发送` 按钮，观察 `http://www.abc.com/zhangsan.html`、`http://www.abc.com/lisi.html`、`http://www.abc.com/wangwu.html` 页面调试窗口中websocket链接的变化，会发现多了一条你刚才发送的消息，如下图所示。
+
+![主动推送页](https://www.haosijia.vip/img/20200407/Websocket演示/群聊测试页.png "主动推送页")
