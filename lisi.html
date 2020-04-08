@@ -9,17 +9,29 @@
     <div class="message-window" style="width: 504px; height: 300px; background: #f4f4f4;"></div>
     <input type="text" name="write" style="width: 500px; height: 30px; font-size: 20px; padding: 0;">
     <button class="send-key" style="font-size: 16px; background-color: #d7ff98;">群发</button>
+    <button class="connect-key" style="font-size: 16px; background-color: #ffe291;">连接</button>
+    <button class="close-key" style="font-size: 16px; background-color: #ffb39c;">断开</button>
   </body>
   <script type="text/javascript">
 
-    ws = simpleWS.setName('李四').connect();
+    var ws = null;
 
-    // 点击“发送”按钮事件
+    // 点击“群发”按钮事件
     $('.send-key').on('click', function(){
       // 调用websocket接口的send()方法发送数据
       ws.send($('input[name="write"]').val());
       // 清空输入框
       $('input[name="write"]').val('');
+    });
+
+    // 点击“连接”按钮事件
+    $('.connect-key').on('click', function(){
+      ws = simpleWS.setName('李四').connect();
+    });
+
+    // 点击“断开”按钮事件
+    $('.close-key').on('click', function(){
+      ws.close();
     });
 
   </script>

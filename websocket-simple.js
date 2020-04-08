@@ -1,12 +1,13 @@
 // 简单封装一下websocket
 var simpleWS = {
-  url: 'ws://127.0.0.1',
+  url: 'lgh.haosijia.vip',
   port: '2020',
   name: '游客',
   onopen: function(){},
   onclose: function(){},
   onmessage: function(){},
   send: function(){},
+  close: function(){},
 };
 
 // 设置url
@@ -34,7 +35,7 @@ simpleWS.connect = function(url = null){
   // 如果服务端是带有SSL安全证书的端口，则需要写成“wss://”
   url = this.url + ':' + this.port;
   // 这里简单的设置一下当前用户的姓名,传给后台做姓名与fd匹配
-  this.ws = new WebSocket(url+'?name='+this.name);
+  this.ws = new WebSocket('ws://'+url+'?name='+this.name);
 
   // 连接成功
   this.ws.onopen = function(event){
@@ -70,6 +71,11 @@ simpleWS.connect = function(url = null){
   }
   
   return this;
+}
+
+// 关闭连接
+simpleWS.close = function(){
+  this.ws.close();
 }
 
 // 将消息展示到页面

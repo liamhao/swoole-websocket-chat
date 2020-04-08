@@ -1,12 +1,30 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Websocket Demo</title>
+    <title>Websocket服务端主动推送</title>
+    <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+    <script src="./websocket-simple.js"></script>
   </head>
   <body>
-    <div><a href="./zhangsan.html">打开张三页面</a></div>
-    <div><a href="./lisi.html">打开李四页面</a></div>
-    <div><a href="./wangwu.html">打开王五页面</a></div>
+    <div><a href="./zhangsan.html" target="_blank">打开张三页面</a></div>
+    <div><a href="./lisi.html" target="_blank">打开李四页面</a></div>
+    <div><a href="./wangwu.html" target="_blank">打开王五页面</a></div>
     <div>服务端主动推送</div>
+    <input type="text" name="tongzhi">
+    <button class="push-key" style="background-color: #d7ff98;">主动发送</button>
   </body>
+  <script type="text/javascript">
+    // 服务端主动推送的原理就是，在服务端先设置好onRequst监听，所有的Http/Https请求都将进入这个方法中，在服务端的onRequest方法中，调用全局的$server变量，将http请求中的数据通过websocket连接发送给客户端。
+    // 点击“主动发送”按钮事件
+    $('.push-key').on('click', function(){
+      // 获取输入框的数据
+      var content = $('input[name="tongzhi"]').val();
+      // 清空输入框
+      $('input[name="tongzhi"]').val('');
+      // 发起http请求，此处为方便，使用jQuery的POST方法
+      $.post('http://'+simpleWS.url+':'+simpleWS.port+'/push-tongzhi', {content: content}, function(data, textStatus, xhr) {
+        console.log(data);
+      });
+    });
+  </script>
 </html>
