@@ -60,4 +60,4 @@ Swoole websocket server start
 ## 服务端主动推送消息
 再打开 `http://www.abc.com/index.html` 页面，在输入框中输入文字，点击 `主动发送` 按钮，观察 `http://www.abc.com/zhangsan.html`、`http://www.abc.com/lisi.html`、`http://www.abc.com/wangwu.html` 页面调试窗口中websocket链接的变化，会发现多了一条你刚才发送的消息，如下图所示。
 
-![主动推送页](https://www.haosijia.vip/img/20200407/Websocket演示/群聊测试页.png "主动推送页")
+![主动推送页](https://www.haosijia.vip/img/20200407/Websocket演示/主动推送页.png "主动推送页")
