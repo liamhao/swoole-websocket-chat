@@ -17,8 +17,8 @@
 
 - [Apache](https://www.apache.org) Web服务器
 - [Nginx](https://nginx.org) 或者这个Web服务器
-- [PHP](https://www.php.net) 世界上最好的语言（滑稽）
-- [Swoole](https://wiki.swoole.com) 一个 `PHP` 的 `协程` `高性能` 网络通信引擎，使用 C/C++ 语言编写。需要自己手动安装扩展，而且不支持 `Windows` 系统
+- [PHP](https://www.php.net) 世界上最好的语言（滑稽）版本：v7.2+
+- [Swoole](https://wiki.swoole.com) 一个 `PHP` 的 `协程` `高性能` 网络通信引擎，使用 C/C++ 语言编写。需要自己手动安装扩展，而且不支持 `Windows` 系统。版本：v4.4+
 
 并且将需要监听的端口打开，如本例中的 `2020` 端口。至于如何安装以上软件，我就不在这里详细赘述了，大家可以自行 Google 。
 
